@@ -4,11 +4,13 @@ import React, { useState, useEffect } from 'react'
 import { commerce } from './lib/commerce'
 import Products from './components/Products/Products';
 import Navbar from './components/Navbar/Navbar';
+import Cart from './components/Cart/Cart';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
-  
+
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
 
@@ -16,7 +18,7 @@ const App = () => {
   }
 
   const fetchCart = async () => {
-    
+
     setCart(await commerce.cart.retrieve())
   }
 
@@ -34,10 +36,22 @@ const App = () => {
   console.log(cart)
 
   return (
-    <div>
+    <Router>
+      <div>
         <Navbar totalItems={cart.total_items} />
-        <Products products={products} onAddToCart={handleAddToCart} /> 
-    </div>
+        <Routes>
+          <Route exact path='/' element={<Products products={products} onAddToCart={handleAddToCart} />}/>
+            
+
+
+          <Route exact path='cart' element={<Cart cart={cart} />}/>
+            
+          
+
+
+        </Routes>
+      </div>
+    </Router>
   )
 }
 

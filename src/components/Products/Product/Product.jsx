@@ -3,6 +3,7 @@ import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } fro
 import { AddShoppingCart } from '@material-ui/icons'
 
 import useStyles from './styles';
+import Products from '../Products';
 
 
 const Product = ({ product, onAddToCart }) => {
